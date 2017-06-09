@@ -12,7 +12,7 @@ The project uses Webpack to bundle and transpile the source code to a browser fr
 $ npm install
 ```
 
-### Dev mode
+### Development
 
 Dev mode launches the project in the Webpack Dev Server with hot reloading for editing convience. Run the following command and open a browser to http://localhost:8080.
 
@@ -20,7 +20,7 @@ Dev mode launches the project in the Webpack Dev Server with hot reloading for e
 $ npm start
 ```
 
-### Build mode
+### Production
 
 Build mode sets the environment to 'production' and optimizes the bundle for deployment. The files are optimized by using Webpack plugins, replacing React with Preact, and GZipping the resulting bundle. Run the following command and view the files in the build folder.
 
