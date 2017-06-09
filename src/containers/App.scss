@@ -1,0 +1,25 @@
+/**
+ * *******************************************************
+ *
+ *  The App.scss provides global styles.
+ *
+ *  @author     Dan Carr
+ *  @date       June 2017
+ *
+ * *******************************************************
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  padding: 50px;
+  background-color: gray;
+  font-family: 'Arial', sans-serif;
+  font-size: 2em;
+  color: white;
+}
