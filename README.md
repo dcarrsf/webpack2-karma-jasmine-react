@@ -22,7 +22,7 @@ $ npm start
 
 ### Build mode
 
-Build mode sets the environment to 'production' and optimizes the bundle for deployment. The files are optimized using Webpack plugins, replacing React with Preact, and GZipping the resulting bundle. Run the following command and view the files in the build folder.
+Build mode sets the environment to 'production' and optimizes the bundle for deployment. The files are optimized by using Webpack plugins, replacing React with Preact, and GZipping the resulting bundle. Run the following command and view the files in the build folder.
 
 ```
 $ npm run build
