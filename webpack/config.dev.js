@@ -7,14 +7,22 @@ module.exports = {
   context: path.resolve(__dirname, '../src'),
   // Entry point...
   entry: {
-    app: './app.js',
-    // vendor: ['angular']
+    app: './main.jsx',
   },
   // Output endpoint (development)
   output: {
-    path: path.resolve(__dirname, '../build/dev/js'),
+    path: '/',
     filename: '[name].bundle.js',
     publicPath: 'http://localhost:8080/',
+  },
+  // Add '.jsx' to the resolve.extensions array.
+  resolve: {
+    extensions: ['.js', '.jsx'],
+    // Preact optimization
+    'alias': {
+      'react': 'preact-compat',
+      'react-dom': 'preact-compat'
+    }
   },
   // Run the Dev Server (Hot reloading)
   devServer: {
@@ -24,49 +32,33 @@ module.exports = {
   module: {
     rules: [
       {
-        enforce: "pre",
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "eslint-loader",
-      }, {
-        // Transpile ES6
-        test: /\.js$/,
-        use: ['babel-loader'],
-      }, {
-        // Transpile SASS
+        test: /\.jsx$/,
+        use: [
+          'babel-loader',
+        ],
+      },{
         test: /\.(sass|scss)$/,
         use: [
           'style-loader',
           'css-loader',
-          'resolve-url-loader', 
-          'sass-loader?sourceMap'
+          'sass-loader',
         ]
-      }, {
-        // Bundle HTML partials
-        test: /\.html$/,
-        use: [
-          'raw-loader',
-        ]
-      }
+      },{
+        test: /\.js$/,
+        exclude: /node_modules/,
+        enforce: 'pre',
+        use: [{loader: 'eslint-loader', options: {rules: {semi: 0}}}],
+      },
     ],
   },
   plugins: [
     // Avoid publishing files when compilation fails
     new webpack.NoEmitOnErrorsPlugin(),
-    // Split angular to vendor file
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: "vendor",
-    //   filename: "vendor.bundle.js"
-    // }),
     // Generate the index.html file
     new HtmlWebpackPlugin({
-      title: 'Webpack build example',
-      template: '../src/app.ejs',
-      filename: 'index.html'
-    }),
+      title: 'Disney Coding Test',
+      template: '../src/main.ejs',
+      filename: '../index.html'
+    })
   ],
-  // Needed for angular-router
-  node: {
-    fs: "empty"
-  }
 };

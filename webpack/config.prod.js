@@ -1,78 +1,78 @@
 const path = require('path');
 const webpack = require('webpack');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   // Start at the context path
   context: path.resolve(__dirname, '../src'),
   // Entry point...
   entry: {
-    app: './app.js',
-    // vendor: ["angular"]
+    app: './main.jsx',
   },
   // Output endpoint (production)
   output: {
-    path: path.resolve(__dirname, '../build/prod/js'),
+    path: path.resolve(__dirname, '../build/js'),
     filename: '[name].bundle.min.js',
+  },
+  // Add '.jsx' to the resolve.extensions array.
+  resolve: {
+    extensions: ['.js', '.jsx'],
+    // Preact optimization
+    'alias': {
+      'react': 'preact-compat',
+      'react-dom': 'preact-compat'
+    }
   },
   // Run tasks with loaders...
   module: {
     rules: [
       {
-        enforce: "pre",
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "eslint-loader",
-      },{
-        // Transpile ES6
-        test: /\.js$/,
-        use: ['babel-loader'],
-      },{
+        // Transpile ES6/ES7/JSX
+        test: /\.jsx$/,
+        use: [
+          'babel-loader'
+        ],
+      }, {
         // Transpile SASS
         test: /\.(sass|scss)$/,
         use: [
           'style-loader',
           'css-loader',
-          'resolve-url-loader', 
-          'sass-loader?sourceMap'
+          'sass-loader',
         ]
-        // test: /\.(sass|scss)$/,
-        // loader: ExtractTextPlugin.extract({
-        //   fallback: 'style-loader',
-        //   loader: 'css-loader!sass-loader',
-        // }),
       }, {
-        // Bundle HTML partials
-        test: /\.html$/,
-        use: [
-          'raw-loader',
-        ]
+        // Lint JavaScript (Airbnb Style Guide)
+        test: /\.js$/,
+        exclude: /node_modules/,
+        enforce: 'pre',
+        use: [{loader: 'eslint-loader', options: {rules: {semi: 0}}}],
       }
     ],
   },
   plugins: [
     // Avoid publishing files when compilation fails
     new webpack.NoEmitOnErrorsPlugin(),
-    // Split angular to vendor file
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: "vendor",
-    //   filename: "vendor.bundle.min.js"
-    // }),
-    // Extract CSS to separate file
-    // new ExtractTextPlugin({
-    //   filename: '[name].bundle.min.css',
-    //   allChunks: true,
-    // }),
+    // Optimize environment
+    new webpack.DefinePlugin({ 
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new CompressionPlugin({   
+      asset: "[path].gz[query]",
+      algorithm: "gzip",
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+      minRatio: 0.8
+    }),
     // Generate the index.html file
     new HtmlWebpackPlugin({
-      title: 'Webpack build example',
-      template: '../src/app.ejs',
+      title: 'Disney Coding Test',
+      template: '../src/main.ejs',
       filename: '../index.html'
     })
   ],
-  // Needed for angular-router
-  node: {
-    fs: "empty"
-  }
 };
