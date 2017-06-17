@@ -1,8 +1,9 @@
 {
-  "name": "disney-code-test",
+  "name": "webpack-karma-jasmine-react",
   "author": "Dan Carr",
   "version": "1.0.0",
-  "description": "Frontend engineering code test solution.",
+  "description": "Testing and build setup for React components.",
+  "license" : "MIT",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack/config.dev.js --inline --hot --no-info",
     "build": "webpack --config ./webpack/config.prod.js --progress --colors --optimize-minimize",
@@ -10,8 +11,6 @@
     "test-multi": "karma start --single-run=false"
   },
   "dependencies": {
-    "preact": "^8.1.0",
-    "preact-compat": "^3.16.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
