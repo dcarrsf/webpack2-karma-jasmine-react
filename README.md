@@ -1,8 +1,8 @@
-# Disney Code Test
+# webpack2-karma-jasmine-react
 
-This repo contains the code test solution by Dan Carr.
+This repo contains starter files used to create React components with testing in Karma and Jasmine. 
 
-![Screenshot](/img/disney-code-solution.jpg)
+![Screenshot](/img/karma-jasmine.png)
 
 ## How to get started
 
@@ -30,7 +30,7 @@ $ npm run build
 
 ## How to run tests
 
-The project uses Karma as a test runner and Jasmine as the BDD test suite. In addition, we're using React's TestUtils and Enzyme to unit test the components in the app. Run the following command to view a single run of the application tests.
+The project uses Karma as a test runner and Jasmine as the BDD test suite. In addition, we're using Enzyme to unit test the components in the app. Run the following command to view a single run of the application tests.
 
 ```
 $ npm test
